@@ -87,6 +87,17 @@ contract FundMe {
 
     event EthSwept(address indexed recipient, uint256 amount);
 
+    // Explainer from: https://solidity-by-example.org/fallback/
+    // Ether is sent to contract
+    //      is msg.data empty?
+    //          /   \
+    //         yes  no
+    //         /     \
+    //    receive()?  fallback()
+    //     /   \
+    //   yes   no
+    //  /        \
+    //receive()  fallback()
     fallback() external payable {
         fund();
     }
@@ -113,18 +124,6 @@ contract FundMe {
         return i_owner;
     }
 }
-
-// Explainer from: https://solidity-by-example.org/fallback/
-// Ether is sent to contract
-//      is msg.data empty?
-//          /   \
-//         yes  no
-//         /     \
-//    receive()?  fallback()
-//     /   \
-//   yes   no
-//  /        \
-//receive()  fallback()
 
 // Concepts we didn't cover yet (will cover in later sections)
 // 1. Enum
