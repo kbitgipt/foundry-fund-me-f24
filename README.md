@@ -1,66 +1,66 @@
-## Foundry
+# Foundry Fund Me
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+This is a simple fund me foundry project from Cyfrin Solidity Course. Shout out to the course and Patrick Collins!
 
-Foundry consists of:
+# Getting Started
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## Requirements
 
-## Documentation
+- [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+  - You'll know you did it right if you can run `git --version` and you see a response like `git version x.x.x`
+- [foundry](https://getfoundry.sh/)
+  - You'll know you did it right if you can run `forge --version` and you see a response like `forge 0.2.0 (816e00b 2023-03-16T00:05:26.396218Z)`
 
-https://book.getfoundry.sh/
 
-## Usage
+## Quickstart
 
-### Build
-
-```shell
-$ forge build
+```
+git clone https://github.com/Cyfrin/foundry-fund-me-cu
+cd foundry-fund-me-cu
+make
 ```
 
-### Test
+# Usage
 
-```shell
-$ forge test
+## Deploy
+
+```
+forge script script/DeployFundMe.s.sol
 ```
 
-### Format
+## Testing
 
-```shell
-$ forge fmt
+We talk about 4 test tiers in the video. 
+
+1. Unit
+2. Integration
+3. Forked
+4. Staging
+
+This repo we cover #1 and #3. 
+
+```
+forge test
 ```
 
-### Gas Snapshots
+or 
 
-```shell
-$ forge snapshot
+```
+// Only run test functions matching the specified regex pattern.
+
+"forge test -m testFunctionName" is deprecated. Please use 
+
+forge test --match-test testFunctionName
 ```
 
-### Anvil
+or
 
-```shell
-$ anvil
+```
+forge test --fork-url $SEPOLIA_RPC_URL
 ```
 
-### Deploy
+### Test Coverage
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
 ```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+forge coverage
 ```
