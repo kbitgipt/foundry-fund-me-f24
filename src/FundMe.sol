@@ -61,7 +61,7 @@ contract FundMe {
         require(callSuccess, "Call failed");
     }
 
-    function withdraw() public onlyOwner {
+    function withdraw() public {
         for (
             uint256 funderIndex = 0;
             funderIndex < s_funders.length;
@@ -70,19 +70,21 @@ contract FundMe {
             address funder = s_funders[funderIndex];
             s_addressToAmountFunded[funder] = 0;
         }
-        s_funders = new address[](0);
-        // // transfer
-        // payable(msg.sender).transfer(address(this).balance);
 
-        // // send
-        // bool sendSuccess = payable(msg.sender).send(address(this).balance);
-        // require(sendSuccess, "Send failed");
-
-        // call
+        // Attempt to transfer the balance to the caller
         (bool callSuccess, ) = payable(msg.sender).call{
             value: address(this).balance
         }("");
-        require(callSuccess, "Call failed");
+        require(
+            callSuccess,
+            "Call failed: insufficient balance or other error"
+        );
+
+        // Additional logging for debugging purposes
+        if (!callSuccess) {
+            // You can add more detailed logging here if needed
+            revert("Call failed: additional details if available");
+        }
     }
 
     event EthSwept(address indexed recipient, uint256 amount);
